@@ -1,0 +1,84 @@
+<head>
+    <title>Sylphus</title>
+    <!-- Material Icons font -->
+    <link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  
+    <!-- Firebase scripts -->
+    <script src=https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js></script>
+    <script src=https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js></script>
+    <script src=https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js></script>
+       
+    <!-- SHA-1 library -->
+    <script src=https://cdn.jsdelivr.net/gh/emn178/js-sha1/build/sha1.min.js></script>
+    
+    <!-- Monaco editor loader -->
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs/loader.min.js integrity="sha512-SExj71Cw3B9C9EE8BC/ad3AKia5zQXDj/2SM4THgkeKh5GIFZhKM/R3uclUG8YZwJrjcVhydAlIHmfNvsBCKZA==" crossorigin=anonymous referrerpolicy=no-referrer></script>
+
+  
+  <!-- Custom stylesheets -->
+    <link rel=stylesheet href=style/style.css>
+    <link rel=stylesheet href=style/editor-tokens.css.css>
+</head>
+<body>
+    <!-- Start of no-repo-shadow div -->
+    <div id=no-repo-shadow>
+        <!-- Open repository section -->
+        <div id=open-repo>
+            <h1>Create</h1><h1>Innovate</h1><h1 style=color:#87cefa>Code</h1>
+        </div>
+        
+        <!-- Get repository section -->
+        <div id=get-repo>
+            <div id=search-repo>
+                <input placeholder="Search for user on github" id=ghuser>
+                <button onclick=getrepos()><i class="material-icons mdc-button__icon" aria-hidden=true> search </i>Search</button>
+            </div>
+            <div id=search-repo-contents></div>
+        </div>
+        
+        <!-- Sign-in form -->
+        <form id=sign-in>
+            <input type=email id=email placeholder=Email required>
+            <input type=password id=password placeholder=Password required>
+            <button type=submit id=login-btn>Log In</button>
+            <button type=submit id=signup-btn style="background:0 0;color:#2196f3">Create an account now</button>
+            <button type=button id=github-signup style=margin-top:100px>Sign Up with GitHub</button>
+            <button type=button id=google-signup>Sign Up with Google</button>
+        </form>
+    </div>
+    <!-- End of no-repo-shadow div -->
+
+    <!-- Main editor section -->
+    <div class=main--editor>
+        <main id=user_div class=loggedin-div>
+            <header>
+                <!-- Logo and user information -->
+                <p id=logo>Sylphus</p>
+                <div class=igrp>
+                    <div type=text id=repository><p id=reponame></p></div>
+                    <button class=deploy-button onclick=dov()><i class="material-icons mdc-button__icon" aria-hidden=true> rocket </i>deploy</button>
+                    <img alt="" id=user-image-editor>
+                    <i class="material-icons mdc-button__icon logout" onclick=logout() aria-hidden=true> logout </i>
+                </div>
+            </header>
+            <div class=many>
+                <!-- Output and file container -->
+                <div id=output class=filecontainer>
+                    <div class=file-add-cont>
+                        <div class=icon>
+                            <i class="material-icons mdc-button__icon" aria-hidden=true onclick=addfile()> post_add </i>
+                            <i class="material-icons mdc-button__icon" aria-hidden=true> create_new_folder </i>
+                        </div>
+                    </div>
+                    <ul id=root></ul>
+                </div>
+                <div id=firepad-container>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- JavaScript scripts -->
+    <script src=scripts/main.js></script>
+    <script src=scripts/auth.js></script>
+</body>
+</html>
