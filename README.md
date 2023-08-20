@@ -13,11 +13,10 @@
 
 ## Getting Started
 
-1. Clone the Sylphus repository to your local machine.
-2. Open the `index.html` file in your preferred web browser.
-3. Click on the "Login with GitHub" button to initiate GitHub authentication.
-4. After successful authentication, your GitHub repositories will be displayed. Select the repository you wish to edit.
-5. The code editor will load with the contents of your chosen repository. Start making code edits.
+1. Head over to [Sylphus](https://firescryptgithubio.adhvaithprasad.repl.co/)
+2. Click on the "Login with GitHub" button to initiate GitHub authentication.
+3. After successful authentication, your GitHub repositories will be displayed. Select the repository you wish to edit.
+4. The code editor will load with the contents of your chosen repository. Start making code edits.
 
 ## Usage
 
@@ -26,7 +25,7 @@
 1. Use the file explorer on the left to select a file.
 2. The code editor will load the chosen file's content, allowing you to make modifications.
 3. Enjoy the benefits of syntax highlighting and fundamental code editing features.
-4. Save your changes by clicking the "Save" button.
+
 
 ### Netlify Deployment
 
@@ -46,4 +45,3 @@ Happy coding with Sylphus!
 
 [Experience the Live Demo](https://firescryptgithubio.adhvaithprasad.repl.co/)
 
-**Note**: This README provides a fictional overview of the Sylphus project for illustrative purposes only. It does not reflect the actual capabilities or functionality of any real application.
