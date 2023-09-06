@@ -62,7 +62,7 @@ function init() {
           if(typeof fileName === "string"){
             tab.textContent = fileName.split("/")[fileName.split("/").length - 1];
           }
-            else if(typeof fileName === "object"){
+            else{
               tab.textContent = fileName.name.split("/")[fileName.name.split("/").length - 1];
             }
             tab.addEventListener('click', () => {
@@ -380,7 +380,7 @@ function gotofile(e) {
 
 function setval(fn, fv) {
   addOrSwitchTab(fn, fv);
-  console.log(fileName)
+  console.log(fn,fv)
 }
 
 
