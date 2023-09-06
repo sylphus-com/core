@@ -79,7 +79,7 @@ function init() {
     function switchTab(fileName) {
         const model = editorModels[fileName];
         if (model) {
-            editor.setModel(model);
+            window.editor.setModel(model);
         }
     };
     monaco.languages.register({ id: 'custom-lang' });
