@@ -1,3 +1,4 @@
+
 <head>
   <title>Sylphus</title>
   <!-- Material Icons font -->
@@ -97,9 +98,9 @@
         <div id="create_thread_cont"><button onclick=cancelThread()>cancel</button><input id="thread_content"type="text"><i class="material-icons mdc-button__icon" onclick=sendthread() aria-hidden="true" type="button" style="
 ">send</i></div>
         <div class="nav">
-          <i onclick=filetab() class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> source</i>
-          <i onclick=reviewtab() class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> rate_review</i>
-          <i onclick=chattab() class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> forum</i>
+          <i onclick=filetab() class="material-icons mdc-button__icon filetab" aria-hidden=true type="button"> source</i>
+          <i onclick=reviewtab() class="material-icons mdc-button__icon reviewtab" aria-hidden=true type="button"> rate_review</i>
+          <i onclick=chattab() class="material-icons mdc-button__icon chattab" aria-hidden=true type="button"> forum</i>
           <i  class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> sync_alt</i>
          
         </div>
@@ -146,11 +147,11 @@
     letter-spacing: 1px;
 ">Choose a github repository to edit</p>
 </div>
-        <div class="editor-container">
+        <div class="editor-container" id="editor-main-container">
           <div id="editor-header"></div>
           <div id=firepad-container></div>
           <div id="editor-footer">
-            <button>Ln 153, Col 28</button>
+            <button id="positionButton"></button>
           </div>
         </div>
         <div id="chat-container">

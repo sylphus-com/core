@@ -1,7 +1,16 @@
 /**
  * Initializes the Monaco editor and sets up its configuration.
  */
-let parameters=[]
+ function updatePosition() {
+            
+            const position = window.editor.getPosition();
+            
+            // Update the button text
+            const button = document.getElementById('positionButton');
+            button.innerHTML = `Line: ${position.lineNumber}, Column: ${position.column}`;
+        }
+let parameters=[];
+let addOrSwitchTab;
 function init() {
   filetab()
   // Configure the paths for Monaco editor
@@ -34,9 +43,47 @@ function init() {
       },
       theme: "vs-dark"
     });
+     
+    const tabContainer = document.getElementById('editor-header');
+     const editorModels = {};
+
+    // Function to create a new model for a file
+    function createModel(fileName, content) {
+        const model = monaco.editor.createModel(content, 'javascript');
+        editorModels[fileName] = model;
+        return model;
+    }
+
+    // Function to switch between tabs or add a new one if it doesn't exist
+    addOrSwitchTab = function (fileName, content) {
+        if (!editorModels[fileName]) {
+            const tab = document.createElement('div');
+            tab.className = 'tab';
+            tab.textContent = fileName.split("/")[fileName.split("/").length - 1];
+            tab.addEventListener('click', () => {
+                switchTab(fileName);
+            });
+
+            tabContainer.appendChild(tab);
+            createModel(fileName, content);
+        }
+        switchTab(fileName);
+    };
+
+    // Function to switch between tabs
+    function switchTab(fileName) {
+        const model = editorModels[fileName];
+        if (model) {
+            editor.setModel(model);
+        }
+    };
     monaco.languages.register({ id: 'custom-lang' });
 
+  // Add an event listener to update the button text on cursor position change
+            window.editor.onDidChangeCursorPosition(updatePosition);
 
+            // Initial update
+            updatePosition();
     let currentUser = firebase.auth().currentUser;
     window.editor.getModel().onDidChangeContent((event) => {
       render(currentUser.uid, fileName)
@@ -113,7 +160,7 @@ function getSubFolder(u,e,t){
   null !== i ? "none" == i.style.display ? i.style.display = "block" : i.style.display = "none" : fetch(e, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(e => displayFiles(e, t)).catch(e => console.error(e))
 }
@@ -221,7 +268,7 @@ function getRepoFiles(e) {
   repoName = e, fetch(`https://api.github.com/repos/${e}/contents`, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
 
@@ -332,7 +379,7 @@ function gotofile(e) {
 
 
 function setval(fn, fv) {
-  window.editor.getModel().setValue(fv);
+  addOrSwitchTab(fn, fv);
   console.log(fileName)
 }
 
@@ -349,7 +396,7 @@ function getrepos() {
   fetch(`https://api.github.com/users/${e}/repos`, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(t => {
     for (let r in t) document.getElementById("search-repo-contents").innerHTML += `<div class="repo-info" onclick="km('${e}/${t[r].name}')"><i class="material-icons mdc-button__icon" aria-hidden="true" style="
@@ -412,7 +459,7 @@ async function fetchFilesRecursively(e, t, r) {
     let i = await fetch(e, {
       method: "GET",
       headers: {
-        Authorization: "Bearer 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"
+        Authorization: "Bearer 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"
       }
     }),
       a = await i.json(),
@@ -655,10 +702,21 @@ function getContentOfLine(lineNumber) {
 function km(e) {
   // ... (code for redirecting to a URL with repository information)
 
-  window.location.replace("https://firescryptgithubio.adhvaithprasad.repl.co/?repo=" + e)
+  window.location.replace("/?repo=" + e)
 
 }
+function switchTab(element) {
+  // Remove the 'activetab' class from all elements with the class 'activetab'
+  const activeTabs = document.querySelectorAll('.activetab');
+  activeTabs.forEach(tab => tab.classList.remove('activetab'));
+
+  // Add the 'activetab' class to the calling element
+  element.classList.add('activetab');
+}
+
 function reviewtab() {
+   const element = document.querySelector('.reviewtab');
+  switchTab(element);
   document.getElementById("root").style.display = "none";
   document.getElementById("review_cont").style.display = "block";
   document.getElementById("chat_cont").style.display = "none";
@@ -667,33 +725,38 @@ function reviewtab() {
   // document.getElementById("reviewtab").classList.add("file-tab-active");
 }
 function filetab() {
+  const element = document.querySelector('.filetab');
+  switchTab(element);
   document.getElementById("root").style.display = "block";
   document.getElementById("review_cont").style.display = "none";
   document.getElementById("chat_cont").style.display = "none";
   // document.getElementById("filetab").classList.add("file-tab-active");
   // document.getElementById("reviewtab").classList.remove("file-tab-active");
   // document.getElementById("chattab").classList.remove("file-tab-active");
-  document.getElementById("firepad-container").style.display = "block";
+  document.getElementById("editor-main-container").style.display = "block";
   document.getElementById("api-editor").style.display = "none";
    document.getElementById("chat-container").style.display = "none";
 }
 function chattab(){
+  const element = document.querySelector('.chattab');
+  switchTab(element);
     document.getElementById("root").style.display = "none";
   document.getElementById("review_cont").style.display = "none";
   document.getElementById("chat_cont").style.display = "block";
-  // document.getElementById("filetab").classList.remove("file-tab-active");
-  // document.getElementById("reviewtab").classList.remove("file-tab-active");
-  // document.getElementById("chattab").classList.add("file-tab-active");
-  document.getElementById("firepad-container").style.display = "none";
+
+  document.getElementById("editor-main-container").style.display = "none";
   document.getElementById("chat-container").style.display = "flex";
 }
 function apitab() {
+  const element = document.querySelector('.apitab');
+  switchTab(element);
    document.getElementById("chat-container").style.display = "none";
   if(document.getElementById("api-editor").style.display === "flex"){
     document.getElementById("api-editor").style.display="none";
     
      document.getElementById("firepad-container").style.display = "block";
-  }else{
+  }
+  else{
     
 document.getElementById("api-editor").style.display = "flex";
     document.getElementById("firepad-container").style.display = "none";

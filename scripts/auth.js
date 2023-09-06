@@ -62,7 +62,7 @@ function addsubfolder(k) {
     let e = firebase.auth().currentUser;
     // Prompt for file name
     var i = prompt("Folder Name");
-    var m = "newly-added-folder-"+k
+
     // Add the new file to the Firebase database
     db.ref("subfolder-files-to-add/" + e.uid + "/" + k).push({
         name: i,

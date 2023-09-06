@@ -303,18 +303,27 @@ border-right: 1px solid var(--border-color);
     align-items: center;
     justify-content: normal;
   }
-  .main--editor .nav i{
-color: #9da2a6;
+.main--editor .nav i {
+    color: #9da2a6;
     cursor: pointer;
-margin: 4px;
-    padding: 14px;
-  }
-  .main--editor .nav i:hover{
- background: #616161a9;
- color:white;
-border-radius: 5px;
-    /* border-left: 3px solid var(--mdc-theme-primary); */
-  }
+    margin: 0px;
+    border-radius: 0px;
+    width: 100%;
+    display: flex;
+    height: 65px;
+    justify-content: center;
+    align-items: center;
+}
+.main--editor .nav i:hover {
+    background: #6161614a;
+    color: #dbdbdb;
+}
+.activetab {
+    background: #b6defe12 !important;
+    color: #b6defe !important;
+    border-left: 2px solid #2196F3;
+    width: calc(100% - 1px) !important;
+}
 
 
 .main--editor .icon-group{
@@ -1090,11 +1099,7 @@ button.api-tab {
     background: #1e254c;
     color: white;
 }
-.apitab{
-  margin-right: 40px;
-  padding:10px;
-  border-radius:50%;
-}
+
 .apitab:hover{
   background: #8080802e;
 }
@@ -1311,4 +1316,22 @@ div#editor-footer {
     padding: 0px 5px;
     margin: 0;
 }
-
+#editor-header .tab:hover {
+    background: #80808024;
+}
+#editor-header .tab {
+    color: grey;
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 3px 11px;
+    border-radius: 10px;
+}
+div#editor-header {
+    width: calc(100% - 20px);
+    display: flex;
+    height: 40px;
+    align-items: center;
+    padding: 0px 10px;
+}
