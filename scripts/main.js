@@ -160,10 +160,11 @@ function getSubFolder(u,e,t){
   null !== i ? "none" == i.style.display ? i.style.display = "block" : i.style.display = "none" : fetch(e, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(e => displayFiles(e, t)).catch(e => console.error(e))
 }
+    
   else{
      let r = document.getElementById(t),
     i = r.querySelector(".subfolder");
@@ -268,7 +269,7 @@ function getRepoFiles(e) {
   repoName = e, fetch(`https://api.github.com/repos/${e}/contents`, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
 
@@ -396,7 +397,7 @@ function getrepos() {
   fetch(`https://api.github.com/users/${e}/repos`, {
     method: "GET",
     headers: {
-      Authorization: "Bearer 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"
+      Authorization: "Bearer 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"
     }
   }).then(e => e.json()).then(t => {
     for (let r in t) document.getElementById("search-repo-contents").innerHTML += `<div class="repo-info" onclick="km('${e}/${t[r].name}')"><i class="material-icons mdc-button__icon" aria-hidden="true" style="
@@ -459,7 +460,7 @@ async function fetchFilesRecursively(e, t, r) {
     let i = await fetch(e, {
       method: "GET",
       headers: {
-        Authorization: "Bearer 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"
+        Authorization: "Bearer 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"
       }
     }),
       a = await i.json(),
