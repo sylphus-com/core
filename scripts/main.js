@@ -265,7 +265,7 @@ function getRepoFiles(e) {
   // ... (code for fetching and displaying repository files)
 
   repoName = e, fetch(`https://api.github.com/repos/${e}/contents`, {
-    method: "GET").then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
+    method: "GET"}).then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
 
 }
 
