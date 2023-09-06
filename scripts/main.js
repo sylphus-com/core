@@ -59,7 +59,12 @@ function init() {
         if (!editorModels[fileName]) {
             const tab = document.createElement('div');
             tab.className = 'tab';
+          if(typeof fileName === "string"){
             tab.textContent = fileName.split("/")[fileName.split("/").length - 1];
+          }
+            else if(typeof fileName === "object"){
+              tab.textContent = fileName.name.split("/")[fileName.name.split("/").length - 1];
+            }
             tab.addEventListener('click', () => {
                 switchTab(fileName);
             });
