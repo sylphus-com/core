@@ -1,6 +1,7 @@
 /**
  * Initializes the Monaco editor and sets up its configuration.
  */
+ let editorModels = {};
  function updatePosition() {
             
             const position = window.editor.getPosition();
@@ -45,7 +46,7 @@ function init() {
     });
      
     const tabContainer = document.getElementById('editor-header');
-     const editorModels = {};
+    
 
     // Function to create a new model for a file
     function createModel(fileName, content) {
@@ -56,15 +57,12 @@ function init() {
 
     // Function to switch between tabs or add a new one if it doesn't exist
     addOrSwitchTab = function (fileName, content) {
+      if(typeof fileName === "string"){
+            
         if (!editorModels[fileName]) {
             const tab = document.createElement('div');
             tab.className = 'tab';
-          if(typeof fileName === "string"){
-            tab.textContent = fileName.split("/")[fileName.split("/").length - 1];
-          }
-            else{
-              tab.textContent = fileName.name.split("/")[fileName.name.split("/").length - 1];
-            }
+          tab.textContent = fileName.split("/")[fileName.split("/").length - 1];
             tab.addEventListener('click', () => {
                 switchTab(fileName);
             });
@@ -72,7 +70,26 @@ function init() {
             tabContainer.appendChild(tab);
             createModel(fileName, content);
         }
-        switchTab(fileName);
+         switchTab(fileName);
+          }
+            else{
+              
+             
+              if (!editorModels[fileName.name]) {
+            const tab = document.createElement('div');
+            tab.className = 'tab';
+           tab.textContent = fileName.name.split("/")[fileName.name.split("/").length - 1];
+            tab.addEventListener('click', () => {
+                switchTab(fileName.name);
+            });
+
+            tabContainer.appendChild(tab);
+            createModel(fileName.name, content);
+        }
+               switchTab(fileName.name);
+            }
+        
+       
     };
 
     // Function to switch between tabs
@@ -82,6 +99,7 @@ function init() {
             window.editor.setModel(model);
         }
     };
+    
     monaco.languages.register({ id: 'custom-lang' });
 
   // Add an event listener to update the button text on cursor position change
