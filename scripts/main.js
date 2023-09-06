@@ -159,9 +159,7 @@ function getSubFolder(u,e,t){
     i = r.querySelector(".subfolder");
   null !== i ? "none" == i.style.display ? i.style.display = "block" : i.style.display = "none" : fetch(e, {
     method: "GET",
-    headers: {
-      Authorization: "Bearer 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"
-    }
+   
   }).then(e => e.json()).then(e => displayFiles(e, t)).catch(e => console.error(e))
 }
     
@@ -267,11 +265,7 @@ function getRepoFiles(e) {
   // ... (code for fetching and displaying repository files)
 
   repoName = e, fetch(`https://api.github.com/repos/${e}/contents`, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer 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"
-    }
-  }).then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
+    method: "GET").then(e => e.json()).then(e => createTree(e, "root")).catch(e => console.error(e))
 
 }
 
@@ -395,10 +389,8 @@ function getrepos() {
   document.getElementById("search-repo-contents").innerHTML = "";
   var e = document.getElementById("ghuser").value;
   fetch(`https://api.github.com/users/${e}/repos`, {
-    method: "GET",
-    headers: {
-      Authorization: "Bearer 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"
-    }
+    method: "GET"
+    
   }).then(e => e.json()).then(t => {
     for (let r in t) document.getElementById("search-repo-contents").innerHTML += `<div class="repo-info" onclick="km('${e}/${t[r].name}')"><i class="material-icons mdc-button__icon" aria-hidden="true" style="
     margin-right: 10px;
@@ -458,10 +450,8 @@ async function fetchFilesRecursively(e, t, r) {
   console.log("preparing files for deployment .. ");
   try {
     let i = await fetch(e, {
-      method: "GET",
-      headers: {
-        Authorization: "Bearer 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"
-      }
+      method: "GET"
+     
     }),
       a = await i.json(),
       n = firebase.auth().currentUser.uid;
