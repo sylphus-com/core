@@ -246,6 +246,7 @@ height: 54px;
 .editor-container {
     height: var(--h-height);
     width: calc(100% - 420px);
+  display:none;
     max-width: calc(100% - 420px);
 }
   .main--editor .mdc-tab-bar-1{

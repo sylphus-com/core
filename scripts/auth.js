@@ -142,35 +142,78 @@ function addfolder() {
 // ...
 // (Remaining code, including authentication state change listener and event handlers)
 // ...
-firebase.auth().onAuthStateChanged(function(e) {
-    if (e) {
-        var t = e.uid;
-        if (db.ref("users/" + t + "repos/").on("value", e => {
-                let t = e.val();
-                for (let n in t)
-                    for (let i in t[n]) {
-                        let r = t[n][i].repo;
-                        document.getElementById("search-repo-contents").innerHTML += `<div class="repo-info" onclick="km('${r}')"><i class="material-icons mdc-button__icon" aria-hidden="true" style="
-    margin-right: 10px;
-"> commit </i><p>${r.split("/")[0]+" / "+r.split("/")[1]}</p></div>`
-                    }
-            }), new URL(location.href).searchParams.get("repo")) {
-            var n = new URL(location.href).searchParams.get("repo");
-            db.ref("users/" + t + "repos/" + n).set({
-                repo: n,
-                created: new Date
-            }), getRepoFiles(n)
-          document.getElementById("no-repo-chosen").style.display = "none"
-        } else document.getElementById("get-repo").style.display = "block",document.getElementById("repos_btn").style.display = "none",document.querySelector(".editor-container").style.display = "none",document.getElementById("no-repo-chosen").style.display = "flex";
-        document.querySelector(".main--editor").style.display = "block", init();
-        var i = document.querySelector(".monaco-editor");
-        void 0 !== i && null != i && (window.onresize = function() {
-            editor.layout()
-        }), null !== e && e.providerData.forEach(e => {
-            document.getElementById("user-image-editor").src = e.photoURL
-        })
-    } else document.getElementById("no-repo-shadow").style.display = "flex", document.getElementById("sign-in").style.display = "flex",document.getElementById("no-repo-chosen").style.display = "none"
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+        const uid = user.uid;
+        const repoQueryParam = new URL(location.href).searchParams.get("repo");
+
+        // Function to render repositories
+        function renderRepos(repos) {
+            const repoContentsElement = document.getElementById("search-repo-contents");
+            repoContentsElement.innerHTML = "";
+
+            for (const repoKey in repos) {
+                for (const innerKey in repos[repoKey]) {
+                    const repo = repos[repoKey][innerKey].repo;
+                    const repoInfoHTML = `<div class="repo-info" onclick="km('${repo}')">
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true" style="margin-right: 10px;">commit</i>
+                                            <p>${repo.split("/")[0]} / ${repo.split("/")[1]}</p>
+                                          </div>`;
+                    repoContentsElement.innerHTML += repoInfoHTML;
+                }
+            }
+        }
+
+        // Fetch repository data from Firebase
+        db.ref(`users/${uid}repos/`).on("value", snapshot => {
+            const reposData = snapshot.val();
+            if (reposData) {
+                // Call renderRepos function to display repositories
+                renderRepos(reposData);
+            }
+        });
+
+        // Check for repoQueryParam
+        if (repoQueryParam) {
+            db.ref(`users/${uid}/repos/${repoQueryParam}`).set({
+                repo: repoQueryParam,
+                created: new Date(),
+            });
+            getRepoFiles(repoQueryParam);
+            document.getElementById("no-repo-chosen").style.display = "none";
+            
+                  document.querySelector(".main--editor").style.display = "block";
+        init();
+        const editorElement = document.querySelector(".monaco-editor");
+        if (editorElement !== undefined && editorElement !== null) {
+            window.onresize = function() {
+                editor.layout();
+            };
+        }
+        } else {
+          document.getElementById("logo").onclick = "";
+          document.querySelector(".main--editor").style.display = "block";
+            document.getElementById("get-repo").style.display = "block";
+            document.getElementById("repos_btn").style.display = "none";
+            document.getElementById("editor-main-container").style.display = "none !important";
+            document.getElementById("no-repo-chosen").style.display = "flex";
+        }
+
+        // Display user image
+
+
+        if (user !== null) {
+            user.providerData.forEach(providerData => {
+                document.getElementById("user-image-editor").src = providerData.photoURL;
+            });
+        }
+    } else {
+        document.getElementById("no-repo-shadow").style.display = "flex";
+        document.getElementById("sign-in").style.display = "flex";
+        document.getElementById("no-repo-chosen").style.display = "none";
+    }
 });
+
 
 const signInForm = document.getElementById("sign-in"),
     loginBtn = document.getElementById("login-btn"),
