@@ -99,9 +99,9 @@
 ">send</i></div>
         <div class="nav">
           <i onclick=filetab() class="material-icons mdc-button__icon filetab" aria-hidden=true type="button"> source</i>
-          <i onclick=reviewtab() class="material-icons mdc-button__icon reviewtab" aria-hidden=true type="button"> rate_review</i>
-          <i onclick=chattab() class="material-icons mdc-button__icon chattab" aria-hidden=true type="button"> forum</i>
-          <i  class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> sync_alt</i>
+          <!-- <i onclick=reviewtab() class="material-icons mdc-button__icon reviewtab" aria-hidden=true type="button"> rate_review</i> -->
+          <i onclick=chattab() class="material-icons mdc-button__icon chattab" aria-hidden=true type="button"> inbox</i>
+          <!-- <i  class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> sync_alt</i> -->
          
         </div>
         <!-- Output and file container -->
@@ -151,7 +151,9 @@
           <div id="editor-header"></div>
           <div id=firepad-container></div>
           <div id="editor-footer">
-            <button id="positionButton"></button>
+            <i class="material-icons mdc-button__icon" aria-hidden="true" onclick=format()>format_align_left</i>
+            <button onclick=gotoline() id="positionButton"></button>
+            
           </div>
         </div>
         <div id="chat-container">

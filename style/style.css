@@ -308,7 +308,8 @@ border-right: 1px solid var(--border-color);
     cursor: pointer;
     margin: 0px;
     border-radius: 0px;
-    width: 100%;
+    width: calc(100% - 1px);
+    border-left: 2px solid transparent;
     display: flex;
     height: 65px;
     justify-content: center;
@@ -321,7 +322,7 @@ border-right: 1px solid var(--border-color);
 .activetab {
     background: #b6defe12 !important;
     color: #b6defe !important;
-    border-left: 2px solid #2196F3;
+    border-left: 2px solid #2196F3 !important;
     width: calc(100% - 1px) !important;
 }
 
@@ -562,7 +563,7 @@ div#open-repo {
     position: absolute;
     z-index: 10;
     background: #0b101c;
-    width: 314px;
+    width: 380px;
     top: 55px;
   display:none;
     padding: 20px;
@@ -1334,4 +1335,12 @@ div#editor-header {
     height: 40px;
     align-items: center;
     padding: 0px 10px;
+}
+#editor-footer i:hover {
+    background: #8080804a;
+}
+#editor-footer i {
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
 }

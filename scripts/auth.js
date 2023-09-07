@@ -161,7 +161,7 @@ firebase.auth().onAuthStateChanged(function(e) {
                 created: new Date
             }), getRepoFiles(n)
           document.getElementById("no-repo-chosen").style.display = "none"
-        } else document.getElementById("get-repo").style.display = "block",document.getElementById("repos_btn").style.display = "none",document.getElementById("firepad-container").style.display = "none",document.getElementById("no-repo-chosen").style.display = "flex";
+        } else document.getElementById("get-repo").style.display = "block",document.getElementById("repos_btn").style.display = "none",document.querySelector(".editor-container").style.display = "none",document.getElementById("no-repo-chosen").style.display = "flex";
         document.querySelector(".main--editor").style.display = "block", init();
         var i = document.querySelector(".monaco-editor");
         void 0 !== i && null != i && (window.onresize = function() {
@@ -255,8 +255,9 @@ function gotochat(k){
     current_group = k
   console.log(current_group,k)
   var chatref = firebase.database().ref('chatdata/'+k);
-chatref.on('value', (snapshot) => {
-  const da = snapshot.val();
+  chatref.get().then((snapshot) => {
+    const da = snapshot.val();
+    
   var n = Object.keys(da);
    n.forEach((data) => {
     
@@ -266,8 +267,20 @@ chatref.on('value', (snapshot) => {
      <p class="message-message">${da[data].message}</p>
      </div></li>`
    });
+  })
+// chatref.on('value', (snapshot) => {
+//   const da = snapshot.val();
+//   var n = Object.keys(da);
+//    n.forEach((data) => {
+    
+//      document.getElementById("chat-data-container").innerHTML += `<li><img class="message-photo" src='${da[data].url}'/>
+//      <div class="message-body">
+//      <div class="message-info"><p class="message-info-sender">${da[data].sender}</p><p class="message-info-date">${da[data].date}</p></div>
+//      <p class="message-message">${da[data].message}</p>
+//      </div></li>`
+//    });
   
-});
+// });
 }
 function getDateTime() {
   const now = new Date();

@@ -4,12 +4,12 @@
 
 ## Features
 
-🔗 **GitHub API Integration**: Sylphus seamlessly connects to your GitHub repositories. Authenticate using your GitHub account and gain direct access to your repositories without leaving the editor.
+
 
 💻 **Code Editing**: Edit your code files (HTML, CSS, JS, etc.) in real-time within the browser. Benefit from syntax highlighting and essential code editing features such as indentation and code suggestions.
 
 
-🚀 **Netlify Deployment**: Once you're satisfied with your code changes, deploy your project to Netlify directly from Sylphus. Choose the deployment branch, configure settings, and witness your project go live swiftly.
+
 
 ## Getting Started
 
@@ -27,9 +27,7 @@
 3. Enjoy the benefits of syntax highlighting and fundamental code editing features.
 
 
-### Netlify Deployment
 
-1. Initiate the deployment process by clicking the "Deploy" button.
 
 ## Contribution
 
