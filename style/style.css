@@ -16,7 +16,7 @@
   font-family: 'Poppins', sans-serif !important;
 --b-2:#3573a5 !important;
 --height: calc(100vh - 55px);
---h-height: calc(100vh - 55px);
+--h-height: 100vh;
 --terminal-text: rgb(204, 204, 204);
 --mdc-text-primary: rgb(238, 235, 235);
     --mdc-layout-grid-margin-desktop: 24px;
@@ -231,7 +231,7 @@ height: 54px;
 .main--editor #firepad-container {
    width: 100%;
     max-width: 100%;
-    height: calc(100% - 80px);
+    height: calc(100% - 120px);
     max-height: 100% !important;
     font-size: 16px;
     display: flex;
@@ -302,7 +302,7 @@ border-right: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: normal;
+    justify-content: space-between;
   }
 .main--editor .nav i {
     color: #9da2a6;
@@ -777,7 +777,7 @@ width: 45px;
 #user-image-editor {
     border-radius: 50%;
     width: 34px;
-    margin-left: 12px;
+    margin-bottom: 12px;
 }
 .user i{
   margin-right: 16px;
@@ -1250,13 +1250,13 @@ p.message-message {
 .file-selector {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin: 10px 0px;
     padding: 8px 11px;
-    width: 332px;
+    width: 331px;
     left: 66px;
     position: absolute;
-    top: 45px;
+    top: 0px;
     background: var(--prima-nocta-darker);
     border-bottom: 1px solid #80808033;
 }
@@ -1323,14 +1323,40 @@ div#editor-footer {
 }
 #editor-header .tab {
     color: grey;
-    font-family: 'Inter';
+    font-family: 'DM sans';
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    height: 100%;
+    
+    padding: 0px 10px;
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+}
+
+
+div#editor-header {
+    width: calc(100% - 20px);
+    display: flex;
+    height: 39px;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+}
+#editor-options-header .tab:hover {
+    background: #80808024;
+}
+#editor-options-header .tab {
+    color: grey;
+    font-family: 'DM sans';
     font-weight: 600;
     font-size: 15px;
     cursor: pointer;
     padding: 3px 11px;
-    border-radius: 10px;
+    border-radius: 6px;
+    text-transform: capitalize;
 }
-div#editor-header {
+div#editor-options-header {
     width: calc(100% - 20px);
     display: flex;
     height: 40px;
@@ -1344,4 +1370,13 @@ div#editor-header {
     color: white;
     padding: 4px;
     border-radius: 4px;
+}
+.nav .icons {
+    width: 100%;
+}
+.active-file-tab {
+    background: #2196f314;
+    height: calc(100% - 2px) !important;
+  color:white !important;
+    border-bottom: 2px solid #2196F3;
 }

@@ -59,50 +59,26 @@
   <!-- Main editor section -->
   <div class=main--editor>
     <main id=user_div class=loggedin-div>
-      <header>
-        <!-- Logo and user information -->
-        <p id=logo onclick="show_repos()"> 
-          <svg class="icon icon-lg bg-secondary" xmlns="http://www.w3.org/2000/svg"
-            width="24" height="24" viewBox="0 0 24 24" style="
-    height: 40px;
-    width: 40px;
-">
-            <g fill="none" fill-rule="evenodd" transform="translate(0 1)">
-              <rect width="24" height="21.305" opacity="0"></rect>
-              <path fill="#000" fill-rule="nonzero"
-                d="M11.4673854 17.522372C8.98328841 16.7202156 7.35309973 14.7536388 7.01671159 12.1789757L6.93908356 11.5579515 10.2641509 11.5579515C13.9126685 11.5579515 14.2878706 11.6097035 15.0770889 12.2954178 16.8366577 13.7962264 16.3708895 16.6943396 14.2361186 17.587062 13.6539084 17.8328841 12.3212938 17.8070081 11.4673854 17.522372zM17.0824798 17.1471698C17.651752 16.2544474 17.8458221 15.4264151 17.7811321 14.2231806 17.7293801 13.2916442 17.66469 13.0458221 17.2506739 12.2954178L16.7719677 11.4285714 19.5795148 11.4285714 22.374124 11.4285714 22.296496 12.2048518C22.0247978 14.8053908 19.8770889 17.0824798 17.2377358 17.587062L16.7460916 17.677628 17.0824798 17.1471698z"
-                opacity=".3" style="
-    fill: #67bd6a;
-    opacity: 1;
-"></path>
-              <path fill="#000" fill-rule="nonzero"
-                d="M6.36981132,9.60431267 C3.95040431,9.03504043 1.93207547,6.70619946 1.67331536,4.22210243 L1.59568733,3.53638814 L9.37142857,3.53638814 C16.8107817,3.53638814 17.1730458,3.54932615 17.9881402,3.79514825 C20.2781671,4.50673854 22.0506739,6.64150943 22.296496,8.98328841 L22.374124,9.74663073 L14.6242588,9.73369272 C10.367655,9.72075472 6.64150943,9.6690027 6.36981132,9.60431267 Z"
-                style="
-    fill: #94ff98;
-"></path>
-            </g>
-          </svg>
-          <i class="material-icons mdc-button__icon" aria-hidden=true id="repos_btn"> arrow_drop_down </i></p>
-        <div class=igrp>
-        
-         
-          
-          <div type=text id=repository onclick=download_zip()>
-            <p id=reponame></p>
-          </div>
-          <img alt="" id=user-image-editor>
-          
-        </div>
-      </header>
+    
       <div class=many>
         <div id="create_thread_cont"><button onclick=cancelThread()>cancel</button><input id="thread_content"type="text"><i class="material-icons mdc-button__icon" onclick=sendthread() aria-hidden="true" type="button" style="
 ">send</i></div>
         <div class="nav">
-          <i onclick=filetab() class="material-icons mdc-button__icon filetab" aria-hidden=true type="button"> source</i>
+          <div class="icons">
+            <img src="https://dartpad.dev/dart-192.png" style="
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 12px;
+">
+            <i onclick=filetab() class="material-icons mdc-button__icon filetab" aria-hidden=true type="button"> source</i>
           <!-- <i onclick=reviewtab() class="material-icons mdc-button__icon reviewtab" aria-hidden=true type="button"> rate_review</i> -->
           <i onclick=chattab() class="material-icons mdc-button__icon chattab" aria-hidden=true type="button"> inbox</i>
+          </div>
           <!-- <i  class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> sync_alt</i> -->
-         
+         <img alt="" id=user-image-editor>
         </div>
         <!-- Output and file container -->
         <div id=output class=filecontainer>
@@ -149,6 +125,11 @@
 ">Choose a github repository to edit</p> -->
 </div>
         <div class="editor-container" id="editor-main-container">
+          <div id="editor-options-header">
+            <div class="tab">edit</div>
+            <div class="tab">selection</div>
+            <div class="tab">go</div>
+          </div>
           <div id="editor-header"></div>
           <div id=firepad-container></div>
           <div id="editor-footer">
