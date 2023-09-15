@@ -1,0 +1,172 @@
+function apitab() {
+  const element = document.querySelector('.apitab');
+  switchTab(element);
+  document.getElementById("chat-container").style.display = "none";
+  if (document.getElementById("api-editor").style.display === "flex") {
+    document.getElementById("api-editor").style.display = "none";
+
+    document.getElementById("firepad-container").style.display = "block";
+  }
+  else {
+
+    document.getElementById("api-editor").style.display = "flex";
+    document.getElementById("firepad-container").style.display = "none";
+    // Configure the paths for Monaco editor
+    require.config({
+      paths: {
+        vs: "https://unpkg.com/monaco-editor@latest/min/vs"
+      }
+    });
+    window.MonacoEnvironment = {
+      getWorkerUrl: () => workerURL
+    };
+    let workerURL = URL.createObjectURL(new Blob([`
+        self.MonacoEnvironment = {
+            baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+        };
+        importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+    `], {
+      type: "text/javascript"
+    }));
+    if (window.parameter_editor) {
+      //h
+    }
+    else {
+
+      require(["vs/editor/editor.main"], function() {
+
+        window.parameter_editor = monaco.editor.create(document.getElementById("parameter-editor"), {
+          minimap: {
+            enabled: false
+          },
+          theme: "vs-dark"
+        });
+
+
+        m3 = monaco.editor.createModel("", "json");
+
+        parametertab()
+      });
+
+    }
+
+
+
+  }
+}
+
+function parametertab() {
+  document.getElementById("body-tab").classList.remove("file-tab-active");
+  document.getElementById("auth-tab").classList.remove("file-tab-active");
+  document.getElementById("header-tab").classList.remove("file-tab-active");
+  document.getElementById("parameter-tab").classList.add("file-tab-active");
+  document.getElementById("parameter-editor").style.display = "none";
+  document.getElementById("header-editor").style.display = "block";
+}
+function bodytab() {
+  document.getElementById("parameter-editor").style.display = "block";
+  document.getElementById("body-tab").classList.add("file-tab-active");
+  document.getElementById("auth-tab").classList.remove("file-tab-active");
+  document.getElementById("header-tab").classList.remove("file-tab-active");
+  document.getElementById("parameter-tab").classList.remove("file-tab-active");
+  document.getElementById("header-editor").style.display = "none";
+  window.parameter_editor.setModel(m3)
+}
+function headertab() {
+  document.getElementById("body-tab").classList.remove("file-tab-active");
+  document.getElementById("auth-tab").classList.remove("file-tab-active");
+  document.getElementById("header-tab").classList.add("file-tab-active");
+  document.getElementById("parameter-tab").classList.remove("file-tab-active");
+  document.getElementById("parameter-editor").style.display = "none";
+  document.getElementById("header-editor").style.display = "none";
+}
+function authtab() {
+  document.getElementById("body-tab").classList.remove("file-tab-active");
+  document.getElementById("auth-tab").classList.add("file-tab-active");
+  document.getElementById("header-tab").classList.remove("file-tab-active");
+  document.getElementById("parameter-tab").classList.remove("file-tab-active");
+  document.getElementById("parameter-editor").style.display = "none";
+  document.getElementById("header-editor").style.display = "none";
+}
+function add_parameter() {
+  var id = generateString(10).split(" ").join("");
+  var keyid = "key-" + id;
+  var valid = "value-" + id;
+  var model = document.createElement('div');
+  model.setAttribute("id", id);
+  model.setAttribute("class", "parameter-content");
+  model.innerHTML = `
+        <input id="${keyid}" type="text" placeholder="Parameter" style="
+   
+    border: 1px solid #80808075;
+">
+    <input id="${valid}" type="text" placeholder="value" style="
+    border: 1px solid #80808075;
+   
+">`
+
+  parameters.push(id);
+  document.getElementById("header-editor").appendChild(model);
+  console.log(parameters);
+}
+function get_api() {
+  var j = parameters;
+  var n = "?";
+  var c = 0
+  var m = j.length
+  j.forEach((m) => {
+    var parameter = document.getElementById("key-" + m).value;
+    var value = document.getElementById("value-" + m).value;
+    c += 1;
+    if (parameter && value) {
+      if (1 === c) {
+        n = n + parameter + "=" + value
+      } else {
+        n = n + "&" + parameter + "=" + value
+      }
+    }
+
+  })
+  console.log(n)
+}
+function add_category() {
+
+  var m_channel_name = "General";
+  var f_channel_name = prompt("Category");
+  var thread = { "name": m_channel_name, "id": generateString(9) }
+  firebase.database().ref("chats/" + repoName + "/" + f_channel_name).push(thread);
+  console.log(thread)
+
+}
+function add_channel(m) {
+
+  var f_channel_name = m;
+  var m_channel_name = prompt("Channel");
+  var thread = { "name": m_channel_name, "id": generateString(9) }
+  firebase.database().ref("chats/" + repoName + "/" + f_channel_name).push(thread);
+  console.log(thread)
+
+}
+        <div id="api-editor" style="display: none;">
+    <div class="main-api-tool">
+    <select>
+        <option>GET</option>
+        <option>POST</option>
+        <option>PUT</option>
+    </select>
+    <input id="api-link">
+    <button>Send</button>
+    <button>Save</button>
+</div>
+<div class="main-api-editor">
+    <div class="api-tabs-tool">
+        <button id="parameter-tab" class="api-tab" onclick=parametertab() >Parameter</button>
+        <button id="auth-tab" class="api-tab" onclick=authtab() >Authentication</button>
+        <button id="header-tab" class="api-tab" onclick=headertab() >Headers</button>
+        <button id="body-tab" class="api-tab" onclick=bodytab() >Body</button></div>
+    <div class="tab-content" id="parameter-editor"></div>
+    <div class="tab-content" id="header-editor">
+      <button onclick="add_parameter()">add</button>
+    </div>
+</div>
+</div>

@@ -32,59 +32,66 @@ function generateString(e) {
   for (let i = 0; i < e; i++) t += characters.charAt(Math.floor(Math.random() * r));
   return t
 }
-function addsubfile(k) {
+function addsubfile(k,m) {
     let e = firebase.auth().currentUser;
     // Prompt for file name
     var i = prompt("File Name");
-   
+   var sha = generateString(20);
+  const repoQueryParam = new URL(location.href).searchParams.get("repo");
     // Add the new file to the Firebase database
-    db.ref("subfolder-files-to-add/" + e.uid + "/" + k).push({
+    db.ref("content-added/"+repoQueryParam+"/" + e.uid + "/" + k).push({
         name: i,
       path:k+"/"+i,
         type: "file",
-       sha:  generateString(20)
+       sha:  sha
     });
 
     // Update the UI with the new file
-    db.ref("subfolder-files-added/" + e.uid + "/" + k + "/" + btoa(i)).set({
-        filepath: i,
-        value: ""
-    });
-
-    
-    document.getElementById(k).innerHTML += `<ul class="subfolder"><li id="newly-added-file-${i}" type="file">
-        <p onclick="gotofile('${k+"/"+i}','newly-added-folder-${i}');">
-            <i class="material-icons mdc-button__icon" aria-hidden="true"> insert_drive_file </i>${i}
+  
+    if(!document.getElementById(m).querySelector(".subfolder")){
+      document.getElementById(m).innerHTML += `<ul class="subfolder"></ul>`
+    }
+    document.getElementById(m).querySelector(".subfolder").innerHTML += `<li id="${sha}" type="file">
+        <p onclick="gotofile('${k+"/"+i}')">
+            <svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><path d="M13 2v7h7"/></svg>
+            
+            ${i}
+            
         </p>
-    </li></ul>`;
+    </li>`;
 }
-function addsubfolder(k) {
+function addsubfolder(k,m) {
     let e = firebase.auth().currentUser;
     // Prompt for file name
     var i = prompt("Folder Name");
-
+   var sha = generateString(20);
+  var path = k+"/"+i ;
+  const repoQueryParam = new URL(location.href).searchParams.get("repo");
     // Add the new file to the Firebase database
-    db.ref("subfolder-files-to-add/" + e.uid + "/" + k).push({
+    db.ref("content-added/"+repoQueryParam+"/" + e.uid + "/" + k).push({
         name: i,
       path:k+"/"+i,
         type: "dir",
-       sha:  generateString(20)
+       sha:  sha
     });
 
     // Update the UI with the new file
-    db.ref("subfolder-files-added/" + e.uid + "/" + k + "/" + btoa(i)).set({
-        filepath: i,
-        value: ""
-    });
+   
 
-    
-    document.getElementById(k).innerHTML += `<ul class="subfolder"><li id="newly-added-folder-${i}" type="dir">
-        <p onclick="getSubFolder('${i}');">
-            <i class="material-icons mdc-button__icon" aria-hidden="true"> folder </i>${i}
-            <i class="material-icons mdc-button__icon sub_folder_icon" aria-hidden="true" onclick="addsubfile('${i}')"> note_add </i>
+     if(!document.getElementById(m).querySelector(".subfolder")){
+      document.getElementById(m).innerHTML += `<ul class="subfolder"></ul>`
+    }
+    document.getElementById(m).querySelector(".subfolder").innerHTML += `<li id="${sha}" type="dir">
+        <p onclick="jello('${path}','${sha}')">
+            <svg class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M2.707 7.454V5.62C2.707 4.725 3.469 4 4.409 4h4.843c.451 0 .884.17 1.204.474l.49.467c.126.12.296.186.473.186h8.399c.94 0 1.55.695 1.55 1.59v.737m-18.661 0h-.354a.344.344 0 00-.353.35l.508 11.587c.015.34.31.609.668.609h17.283c.358 0 .652-.269.667-.61L22 7.805a.344.344 0 00-.353-.35h-.278m-18.662 0h18.662"/></svg>  
             
+            ${i}
+            
+             <svg onclick="addsubfile('${path}','${sha}')" class="sub_folder_icon with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg>
+      <svg onclick="addsubfolder('${path}','${sha}')" class="sub_folder_icon with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>
         </p>
-    </li></ul>`;
+        <ul class="subfolder"></ul>
+    </li>`;
 }
 function addfile() {
     let e = firebase.auth().currentUser;
@@ -145,6 +152,9 @@ function addfolder() {
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         const uid = user.uid;
+      
+
+
         const repoQueryParam = new URL(location.href).searchParams.get("repo");
 
         // Function to render repositories
@@ -175,6 +185,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         // Check for repoQueryParam
         if (repoQueryParam) {
+          
+          var threadref = firebase.database().ref(uid+'/'+repoQueryParam);
+threadref.on('value', (snapshot) => {
+  const data = snapshot.val();
+  console.log(data)
+  addthread(data)
+});
             db.ref(`users/${uid}/repos/${repoQueryParam}`).set({
                 repo: repoQueryParam,
                 created: new Date(),
@@ -184,12 +201,7 @@ firebase.auth().onAuthStateChanged(function(user) {
             
                   document.querySelector(".main--editor").style.display = "block";
         init();
-        const editorElement = document.querySelector(".monaco-editor");
-        if (editorElement !== undefined && editorElement !== null) {
-            window.onresize = function() {
-                editor.layout();
-            };
-        }
+       
         } else {
           document.getElementById("logo").onclick = "";
           document.querySelector(".main--editor").style.display = "block";
@@ -229,9 +241,6 @@ function logout() {
     })
 }
 
-function logout() {
-    firebase.auth().signOut()
-}
 signInForm.addEventListener("submit", e => {
     e.preventDefault(), console.log("sub");
     let t = document.getElementById("email").value,
@@ -274,116 +283,22 @@ signInForm.addEventListener("submit", e => {
             r = e.credential
     })
 });
-var k = new URL(location.href).searchParams.get("repo");
-
-var threadref = firebase.database().ref('threads/'+k);
-threadref.on('value', (snapshot) => {
-  const data = snapshot.val();
-  console.log(data)
-  addthread(data)
-});
 
 
-var chatref = firebase.database().ref('chats/'+k);
-chatref.on('value', (snapshot) => {
-  const data = snapshot.val();
-  console.log(data)
-  addchat(data)
-});
+
 
 let current_group;
 
-function gotochat(k){
-  document.getElementById("chat-data-container").innerHTML =""
-    current_group = k
-  console.log(current_group,k)
-  var chatref = firebase.database().ref('chatdata/'+k);
-  chatref.get().then((snapshot) => {
-    const da = snapshot.val();
-    
-  var n = Object.keys(da);
-   n.forEach((data) => {
-    
-     document.getElementById("chat-data-container").innerHTML += `<li><img class="message-photo" src='${da[data].url}'/>
-     <div class="message-body">
-     <div class="message-info"><p class="message-info-sender">${da[data].sender}</p><p class="message-info-date">${da[data].date}</p></div>
-     <p class="message-message">${da[data].message}</p>
-     </div></li>`
-   });
-  })
-// chatref.on('value', (snapshot) => {
-//   const da = snapshot.val();
-//   var n = Object.keys(da);
-//    n.forEach((data) => {
-    
-//      document.getElementById("chat-data-container").innerHTML += `<li><img class="message-photo" src='${da[data].url}'/>
-//      <div class="message-body">
-//      <div class="message-info"><p class="message-info-sender">${da[data].sender}</p><p class="message-info-date">${da[data].date}</p></div>
-//      <p class="message-message">${da[data].message}</p>
-//      </div></li>`
-//    });
-  
-// });
-}
-function getDateTime() {
-  const now = new Date();
-  const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0'); // January is 0
-  const year = now.getFullYear();
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  
-  const dateTimeString = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-  return dateTimeString;
-}
-function sendmessage(){
-  let e = firebase.auth().currentUser;
-  var value = document.getElementById('chat_value').value;
-  var thread = { "sender": e.displayName ,"message":value,"url":e.photoURL,"date":getDateTime()}
-  firebase.database().ref("chatdata/"+ current_group).push(thread);
-  gotochat(current_group)
-}
-function addchat(data){
-  
-  var n = Object.keys(data);
-  n.forEach((name) => {
-    document.getElementById("chat_cont").innerHTML += `<li><p class="chat_file_name" onclick=expand('${name}')><i class="material-icons mdc-button__icon" aria-hidden="true" style="
-    margin-right: 10px;
-">tag</i>${name}<i onclick=add_channel('${name}') class="material-icons mdc-button__icon" aria-hidden="true" style="
-    margin-left: 10px;
-">add</i></p><ul style=display:none id=${name}></ul></li>`
-    
-    Object.keys(data[name]).forEach((d) => {
-      console.log(data[name][d],name)
-      var threadval= data[name][d];
-      document.getElementById(name).innerHTML += `<li><p onclick="gotochat('${threadval.id}')">  ${threadval.name} </p>
-   </li>`
-    })
-    
-    
-    
-  })
-  console.log(n)
-}
+
+
 function addthread(data){
-  document.getElementById("review_cont").innerHTML="";
+  document.getElementById("git_files_cont").innerHTML=""
   var n = Object.keys(data);
   n.forEach((name) => {
-    document.getElementById("review_cont").innerHTML += `<li><p class="thread_file_name" onclick=expand('${name}')><i class="material-icons mdc-button__icon" aria-hidden="true" style="
+    document.getElementById("git_files_cont").innerHTML += `<li><p class="thread_file_name"><i class="material-icons mdc-button__icon" aria-hidden="true" style="
     margin-right: 10px;
-">insert_drive_file</i>${atob(name)}</p><ul style=display:none id=${name}></ul></li>`
-    Object.keys(data[name]).forEach((d) => {
-      console.log(data[name][d],name)
-      var threadval= data[name][d];
-      document.getElementById(name).innerHTML += `<li><p style="
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-">${d}  <i 
- class="material-icons mdc-button__icon iconm" aria-hidden=true type="button" > chat </i>0 <i onclick=deletethread('${d}','${threadval.file}') class="material-icons mdc-button__icon iconm" aria-hidden=true type="button" > task_alt </i></p>
-    <pre><code>#${threadval.lineNumber}: </code><code>${threadval.content}</code></pre><p>${threadval.thread}</p></li>`
-    })
+">insert_drive_file</i>${data[name].filepath.split("/")[data[name].filepath.split("/").length - 1]}</p></li>`
+  
     
     
   })

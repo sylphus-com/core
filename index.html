@@ -61,24 +61,16 @@
     <main id=user_div class=loggedin-div>
     
       <div class=many>
-        <div id="create_thread_cont"><button onclick=cancelThread()>cancel</button><input id="thread_content"type="text"><i class="material-icons mdc-button__icon" onclick=sendthread() aria-hidden="true" type="button" style="
-">send</i></div>
+   
         <div class="nav">
           <div class="icons">
-            <img src="https://dartpad.dev/dart-192.png" style="
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-    margin-bottom: 12px;
-">
+            <img src="https://dartpad.dev/dart-192.png" >
             <i onclick=filetab() class="material-icons mdc-button__icon filetab" aria-hidden=true type="button"> source</i>
           <!-- <i onclick=reviewtab() class="material-icons mdc-button__icon reviewtab" aria-hidden=true type="button"> rate_review</i> -->
-          <i onclick=chattab() class="material-icons mdc-button__icon chattab" aria-hidden=true type="button"> inbox</i>
+          <i onclick=gittab() class="material-icons mdc-button__icon gittab" aria-hidden=true type="button"> commit</i>
           </div>
           <!-- <i  class="material-icons mdc-button__icon apitab" aria-hidden=true type="button"> sync_alt</i> -->
-         <img alt="" id=user-image-editor>
+         <img alt="" id=user-image-editor onclick=logout()>
         </div>
         <!-- Output and file container -->
         <div id=output class=filecontainer>
@@ -86,34 +78,14 @@
           <ul id=root>
             
           </ul>
-          <ul id=chat_cont>
-            <button class="add_channel" onclick=add_category()>+ add channel</button>
+          <ul id=git_cont>
+            <textarea id="commit_message"></textarea>
+            <button class="add_channel" onclick=commit()>+ add commit</button>
+            <div id="git_files_cont"></div>
           </ul>
-          <ul id=review_cont></ul>
+          
         </div>
-        <div id="api-editor" style="display: none;">
-    <div class="main-api-tool">
-    <select>
-        <option>GET</option>
-        <option>POST</option>
-        <option>PUT</option>
-    </select>
-    <input id="api-link">
-    <button>Send</button>
-    <button>Save</button>
-</div>
-<div class="main-api-editor">
-    <div class="api-tabs-tool">
-        <button id="parameter-tab" class="api-tab" onclick=parametertab() >Parameter</button>
-        <button id="auth-tab" class="api-tab" onclick=authtab() >Authentication</button>
-        <button id="header-tab" class="api-tab" onclick=headertab() >Headers</button>
-        <button id="body-tab" class="api-tab" onclick=bodytab() >Body</button></div>
-    <div class="tab-content" id="parameter-editor"></div>
-    <div class="tab-content" id="header-editor">
-      <button onclick="add_parameter()">add</button>
-    </div>
-</div>
-</div>
+
         <div id="no-repo-chosen">
     <img src="assets/norepo.svg" style="
     height: 20%;
@@ -126,9 +98,27 @@
 </div>
         <div class="editor-container" id="editor-main-container">
           <div id="editor-options-header">
-            <div class="tab">edit</div>
-            <div class="tab">selection</div>
-            <div class="tab">go</div>
+            <div class="tab" onclick=editoptions()>edit</div>
+            <div class="tab" onclick=selectionoptions()>selection</div>
+            <div class="tab" onclick=gooptions()>go</div>
+          </div>
+          <div class="editor-options" id="editoptions">
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+          </div>
+          <div class="editor-options" id="selectoptions">
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+          </div>
+          <div class="editor-options" id="gooptions">
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
+            <div class="editor-option">go to line</div>
           </div>
           <div id="editor-header"></div>
           <div id=firepad-container></div>
@@ -138,13 +128,7 @@
             
           </div>
         </div>
-        <div id="chat-container">
-<ul class="chat-container-main" id="chat-data-container"></ul>    
-<div class="chat-container-footer">
-    <input type="text" id="chat_value">
-    <i class="material-icons mdc-button__icon" aria-hidden="true" onclick=sendmessage()>send</i>
-</div>
-</div>
+        
       </div>
     </main>
   </div>
