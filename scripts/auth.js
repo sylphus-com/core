@@ -45,7 +45,10 @@ function addsubfile(k,m) {
         type: "file",
        sha:  sha
     });
-
+db.ref(e.uid + "/" + repoQueryParam + "/" + btoa(k+"/"+i)).set({
+    filepath: k+"/"+i,
+    value: ""
+  });
     // Update the UI with the new file
   
     if(!document.getElementById(m).querySelector(".subfolder")){

@@ -358,10 +358,7 @@ function createTree(e, t) {
             <p id=reponame>${repoName.split("/")[1]}</p>
           </div>
 <div>
-<svg onclick="addfile()" class=" with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg>
-        
-           
-<svg onclick="addfolder()" class="with-icon_icon__MHUeb" data-testid="geist-icon" fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24" style="color:var(--geist-foreground);width:24px;height:24px"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/><path d="M12 11v6"/><path d="M9 14h6"/></svg>
+  <i class="material-icons reload mdc-button__icon" onclick=getRepoFiles('${repoName}') aria-hidden="true"> sync </i>
 </div>
 
            
@@ -554,7 +551,7 @@ function filetab() {
   const element = document.querySelector('.filetab');
   switchTab(element);
   document.getElementById("root").style.display = "block";
- 
+
   document.getElementById("git_cont").style.display = "none";
 
   document.getElementById("editor-main-container").style.display = "block";
@@ -565,7 +562,7 @@ function gittab() {
   const element = document.querySelector('.gittab');
   switchTab(element);
   document.getElementById("root").style.display = "none";
- 
+
   document.getElementById("git_cont").style.display = "block";
 
   document.getElementById("editor-main-container").style.display = "block";
@@ -583,4 +580,25 @@ function format() {
   editor?.focus();
   const action = editor?.getAction("editor.action.formatDocument");
   void action?.run();
+}
+async function commit() {
+  var owner = repoName.split("/")[0];
+  var repo = repoName.split("/")[1];
+  let currentUser = firebase.auth().currentUser;
+  var uid = currentUser.uid;
+  var value= document.getElementById("commit_message").value;
+  const url = 'https://backend-1.adhvaithprasad.repl.co/commit';
+  const options = {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: `{"uid":"${uid}","owner":"${owner}","repo":"${repo}","commitMessage":"${value}"}`
+  };
+
+  try {
+    const response = await fetch(url, options);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
 }

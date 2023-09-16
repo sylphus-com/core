@@ -3,7 +3,7 @@
   <title>Sylphus</title>
   <!-- Material Icons font -->
   <link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <!-- Firebase scripts -->
   <script src=https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js></script>
   <script src=https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js></script>
@@ -97,29 +97,7 @@
 ">Choose a github repository to edit</p> -->
 </div>
         <div class="editor-container" id="editor-main-container">
-          <div id="editor-options-header">
-            <div class="tab" onclick=editoptions()>edit</div>
-            <div class="tab" onclick=selectionoptions()>selection</div>
-            <div class="tab" onclick=gooptions()>go</div>
-          </div>
-          <div class="editor-options" id="editoptions">
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-          </div>
-          <div class="editor-options" id="selectoptions">
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-          </div>
-          <div class="editor-options" id="gooptions">
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-            <div class="editor-option">go to line</div>
-          </div>
+          
           <div id="editor-header"></div>
           <div id=firepad-container></div>
           <div id="editor-footer">
